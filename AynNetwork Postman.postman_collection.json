@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "898c109a-4289-4bde-b339-c00a89e8455b",
+		"name": "AynNetwork Postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Employee Record",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"employeeNumber\":\"SR1\",\"name\":\"Dayal\",\"gender\":\"male\",\"city\":\"pune\",\"country\":\"india\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/addemployee",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addemployee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Employee",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/queryallemployees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"queryallemployees"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
