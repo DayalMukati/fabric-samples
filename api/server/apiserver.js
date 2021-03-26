@@ -3,7 +3,13 @@ const bodyParser = require('body-parser');
 console.log("API server started");
 const app = express();
 app.use(bodyParser.json());
-
+var cors = require('cors');
+app.options('*', cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+  }));
+app.use(cors());
 // Setting for Hyperledger Fabric
 const FabricCAServices = require('fabric-ca-client');
 const { Wallets, Gateway } = require('fabric-network');
@@ -143,7 +149,7 @@ async function enrollAdmin() {
 }
 
 app.post('/api/v1/registerUser/', async function(req, res){
-    console.log(req.body.userId);
+    console.log(req.body);
     try {
         // load the network configuration
         const ccpPath = path.resolve(__dirname, '..', '..', 'network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
@@ -162,6 +168,7 @@ app.post('/api/v1/registerUser/', async function(req, res){
         const userIdentity = await wallet.get(req.body.userId);
         if (userIdentity) {
             console.log('An identity for the user', req.body.userId, 'already exists in the wallet');
+            res.status(200);
             res.send(`User Already Exits with vaild certificates`);
             return;
         }
@@ -198,6 +205,7 @@ app.post('/api/v1/registerUser/', async function(req, res){
         };
         await wallet.put(req.body.userId, x509Identity);
         console.log('Successfully registered and enrolled admin user' , req.body.userId, 'and imported it into the wallet');
+        res.status(200);
         res.send(`User has been Successfully registered and enrolled`)
     } catch (error) {
         console.error(`Failed to register user` , req.body.userId,`: ${error}`);
